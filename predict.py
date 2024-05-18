@@ -1,3 +1,4 @@
+import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -6,6 +7,9 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
 import re
+import nltk
+
+nltk.download('stopwords')
 
 def load_dataset():
     df = pd.read_csv('IMDB Dataset.csv')
@@ -24,7 +28,7 @@ def load_dataset():
 
     return x_data, y_data
 
-def get_max_length():
+def get_max_length(x_train):
     review_length = []
     for review in x_train:
         review_length.append(len(review))
@@ -51,7 +55,7 @@ x_data, y_data = load_dataset()
 
 x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, test_size = 0.2)
 
-max_length = get_max_length()
+max_length = get_max_length(x_train)
 token = Tokenizer(lower=False)    
 token.fit_on_texts(x_train)
 tokenize_words = token.texts_to_sequences(filtered)
