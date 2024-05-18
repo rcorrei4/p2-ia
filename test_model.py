@@ -14,6 +14,6 @@ with open('tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
 new_model = load_model('LSTM.keras')
 
-new_review = input()
+new_review = str(input('Movie Review: '))
 sentiment = predict_sentiment(new_review)
 print(f"Essa avaliação foi: {sentiment}")
